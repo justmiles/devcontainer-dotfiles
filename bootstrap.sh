@@ -27,3 +27,25 @@ $bin_dir/chezmoi \
 $bin_dir/chezmoi init \
   --exclude scripts \
   --apply https://github.com/justmiles/private-dotfiles.git
+
+# Add configuration to ~/.zshrc
+if [ -f ~/.zshrc ] && ! grep -q "autoload -U +X compinit && compinit" ~/.zshrc; then
+  cat << 'EOF' >> ~/.zshrc
+autoload -U +X compinit && compinit
+autoload -U +X bashcompinit && bashcompinit
+
+for f in $(find ~/.bashrc.d -type f | sort ); do
+    source $f || echo "[$f] could not load - exit code $?"
+done
+EOF
+fi
+
+# Add configuration to ~/.bashrc
+if [ -f ~/.bashrc ] && ! grep -q "for f in \$(find ~/.bashrc.d -type f | sort ); do" ~/.bashrc; then
+  cat << 'EOF' >> ~/.bashrc
+
+for f in $(find ~/.bashrc.d -type f | sort ); do
+    source $f || echo "[$f] could not load - exit code $?"
+done
+EOF
+fi
