@@ -17,14 +17,14 @@ fi
 
 # Initialize chemoi public dotfiles
 mkdir -p ~/{.config,.cache}/chezmoi-{public,private}
-$bin_dir/chezmoi --no-tty \
+$bin_dir/chezmoi --no-tty --force --keep-going \
   --source .local/share/chezmoi-public \
   --cache ~/.cache/chezmoi-public \
   --refresh-externals \
   init --apply https://github.com/justmiles/dotfiles.git
 
 # Initialize chemoi private dotfiles
-$bin_dir/chezmoi init --no-tty \
+$bin_dir/chezmoi init --no-tty --force --keep-going \
   --exclude scripts \
   --apply https://github.com/justmiles/private-dotfiles.git
 
